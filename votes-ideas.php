@@ -81,7 +81,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     if ($voteType === "positive") {
                         $a = $ideas[$index]['votes']['positive'] + 1;
+                        $b = $ideas[$index]['votes']['negative'];
                     } else if ($voteType === "negative") {
+                        $a = $ideas[$index]['votes']['positive'];
                         $b = $ideas[$index]['votes']['negative'] - 1;
                     }
                     echo $a . " = " . $b;
