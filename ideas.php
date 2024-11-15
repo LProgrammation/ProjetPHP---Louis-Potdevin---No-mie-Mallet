@@ -7,36 +7,6 @@ if (!isset($_SESSION['user']) || !$_SESSION['user']['is_authenticated']) {
 
 $userName = $_SESSION['user']['username'];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $ideas = $_POST['ideas'];
-    $votes = $_POST['votes'];
-    $author = $userName;
-
-    $ideasFile = 'ideas.json';
-    $ideas = json_decode(file_get_contents($ideasFile), true) ?? [];
-    $newIdea = [
-        'description' => $description,
-        'author' => $author,
-        'date' => $date,
-        'votes' => ['positive' => 0, 'negative' => 0],
-    ];
-    $ideas[] = $newIdea;
-    file_put_contents($ideasFile, json_encode($ideas, JSON_PRETTY_PRINT));
-
-    header("Location: votes-ideas.php");
-    exit();
-}
-?>
-
-<?php
-session_start();
-if (!isset($_SESSION['user']) || !$_SESSION['user']['is_authenticated']) {
-    header("Location: login.php");
-    exit();
-}
-
-$userName = $_SESSION['user']['username'];
-
 // Boucle pour sécuriser les entrées + historique des idées + création d'idées
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
