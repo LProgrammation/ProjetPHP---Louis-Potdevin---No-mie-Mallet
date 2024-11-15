@@ -1,12 +1,11 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['user'])) {
-    header("Location: login.php"); // Si l'utilisateur n'est pas connecté, on le redirige vers la page de connexion
+if (!isset($_SESSION['user']) || !$_SESSION['user']['is_authenticated']) {
+    header("Location: login.php");
     exit();
 }
 
-$userName = $_SESSION['user'];
+$userName = $_SESSION['user']['username'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $ideas = $_POST['ideas'];
@@ -33,11 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 
 <head>
-    <title>Soumettre une idée</title>
+    <title>Boite à idées</title>
 </head>
 
 <body>
-    <h1>Soumettre une idée</h1>
+    <h1>Boite à idées</h1>
+    <p>Une idée à nous soumettre ? <br>
+        Veuillez remplir le formulaire ci-dessous.</p>
     <form method="post">
         <label for="title">Idée :</label>
         <input type="text" name="title" required><br>
