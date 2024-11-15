@@ -7,25 +7,18 @@
 
 */
 
-require "ideasTrait.php" ; 
 require "usersTrait.php" ; 
-require "voteTrait.php" ; 
 
 class BDD {
-    use Ideas, Users, Vote {
-        Ideas::setPDO as setIdeasPDO; 
-        Users::setPDO as setUsersPDO; 
-        Vote::setPDO as setVotePDO; 
-        Ideas::setPDO insteadof Users, Vote;
-    }
+    use Users;
+    
    
     protected $pdo; // Propriété PDO dans la classe BDD
 
     public function __construct(PDO $pdo) {
         $this->pdo = $pdo; // Initialisation de la propriété PDO
-        $this->setIdeasPDO($pdo);
-        $this->setUsersPDO($pdo);
-        $this->setVotePDO($pdo);
+        $this->setPDO($pdo);
+       
         
     }
 

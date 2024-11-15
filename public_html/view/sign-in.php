@@ -11,6 +11,7 @@ require "../controller/sign.php";
 </head>
 
 <body>
+    <?php if(!isset($_SESSION['user']) || !$_SESSION['user']['is_authenticated']) : ?> 
     <div class="form-sign">
         <h1> Connexion : </h1>
         <form method="POST">
@@ -22,6 +23,13 @@ require "../controller/sign.php";
         </form>
         <a href="sign-up.php"> S'inscrire</a>
     </div>
+    
+    <?php else : ?>
+        <h1> Connexion : </h1>
+        <h2> Vous êtes déjà connecter : </h2>
+        <a href="../controller/logout.php"> Deconnexion</a>
+
+    <?php endif; ?>
 </body>
 
 </html>

@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "" . $e->getMessage() . "";
             }
         } else {
-            echo "echec connexion !";
+            echo "L'identifiant ou le mot de passe est incorrecte !";
         }
 
 
