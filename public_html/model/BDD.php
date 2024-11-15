@@ -52,3 +52,10 @@ catch (Exception $e) {
 }
 
 $bdd = new BDD($pdo);
+$tests = $bdd->checkUser("Louis");
+if($tests) {
+  print_r($tests);
+}
+else{
+  echo "Utilisateur n'existe pas ! ";
+};
