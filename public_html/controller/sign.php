@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $username = trim($_POST["username"]);
         $password = trim($_POST["password"]);
-        $bdd->register(username: $_POST["username"], password: $_POST['password']);
+        $registerRes = $bdd->register(username: $_POST["username"], password: $_POST['password']);
+        
     }
 }

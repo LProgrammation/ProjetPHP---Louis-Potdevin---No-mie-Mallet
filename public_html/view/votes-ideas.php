@@ -36,8 +36,11 @@ require "../controller/votes-ideas.php"
                 <button type="submit" name="vote" value="positive">Vote positif</button>
                 <button type="submit" name="vote" value="negative">Vote négatif</button>
             </form>
+
         </div>
     <?php } ?>
+    <a href="sign-in.php"> Page de connexion</a>
+    <a href="ideas.php"> Soumettre une idée</a>
     <hr>
 </body>
 

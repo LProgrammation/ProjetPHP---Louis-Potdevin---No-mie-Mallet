@@ -19,6 +19,8 @@ require "../controller/ideas.php"
 
         <button type="submit">Soumettre l'idée</button>
     </form>
+    <a href="sign-in.php"> Page de connexion</a>
+    <a href="votes-ideas.php"> Votée pour une idée</a>
 </body>
 
 </html>

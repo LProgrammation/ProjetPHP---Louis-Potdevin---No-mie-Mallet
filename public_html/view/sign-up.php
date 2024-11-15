@@ -12,7 +12,13 @@ require "../controller/sign.php" ;
 
 <body>
     <div class="form-sign">
-
+        <?php if(isset($registerRes) && $registerRes == "duplicate") :  ?>
+            <h1>Cette utilisateur existe déjà ! </h1>
+            <?php elseif(isset($registerRes) && $registerRes != "success") : ?>
+            <h1><?php echo $registerRes?> </h1>
+            <?php elseif(isset($registerRes) && $registerRes == "success") : ?>
+            <h1>Utilisateur enregistrer avec succès ! </h1>
+        <?php endif ; ?>
         <h1> Inscription : </h1>
         <form method="POST">
             <label for="pseudo">Nom d'utilisateur</label>

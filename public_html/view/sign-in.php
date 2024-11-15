@@ -28,6 +28,9 @@ require "../controller/sign.php";
         <h1> Connexion : </h1>
         <h2> Vous êtes déjà connecter : </h2>
         <a href="../controller/logout.php"> Deconnexion</a>
+        <a href="votes-ideas.php"> votée pour une idée</a>
+        <a href="ideas.php"> Soumettre une idée</a>
+        
 
     <?php endif; ?>
 </body>
