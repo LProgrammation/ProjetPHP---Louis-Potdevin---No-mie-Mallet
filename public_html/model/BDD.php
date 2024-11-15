@@ -12,21 +12,28 @@ require "loginTrait.php" ;
 require "voteTrait.php" ; 
 
 class BDD {
-    use Ideas;
-    use Login;
-    use Vote;
+    use Ideas, Users, Vote {
+        Ideas::setPDO as setIdeasPDO; 
+        Users::setPDO as setUsersPDO; 
+        Vote::setPDO as setVotePDO; 
+        Ideas::setPDO insteadof Users, Vote;
+    }
+   
     protected $pdo; // Propriété PDO dans la classe BDD
 
     public function __construct(PDO $pdo) {
         $this->pdo = $pdo; // Initialisation de la propriété PDO
-        $this->setPDO($pdo); // Appel de setPDO pour le trait Identity
+        $this->setIdeasPDO($pdo);
+        $this->setUsersPDO($pdo);
+        $this->setVotePDO($pdo);
+        
     }
 }
 
 $db = "PHP_LP_NM"; 
 $host = "localhost";
-$user = "administrator";
-$pwd = "administrator";  
+$user = "admin";
+$pwd = "admin";  
 
 $dsn = "mysql:host=".$host.";dbname=".$db.";charset=utf8mb4";
 
