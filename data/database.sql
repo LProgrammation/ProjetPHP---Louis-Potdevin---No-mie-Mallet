@@ -1,3 +1,4 @@
+--  USE copy path on this file and launch SOURCE path on mysql to load the script and the database will be usable
 -- Create Database 
 CREATE DATABASE IF NOT EXISTS PHP_LP_NM; 
 --  Create User and Grant Permissions 
