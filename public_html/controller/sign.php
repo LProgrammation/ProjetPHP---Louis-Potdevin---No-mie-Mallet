@@ -10,8 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($signIn) {
             try {
                 $userId = $signIn['id'];
-                if (!isset($_COOKIE['sessionId'])) setcookie('sessionId', session_id());
-                
                 var_dump($_COOKIE['sessionId']);
                 $session_id = $_COOKIE['sessionId'] ; 
                 $_SESSION['is_authenticated '] = true;
