@@ -1,0 +1,7 @@
+<!-- vote -->
+
+<?php
+
+Trait Vote{
+    
+}
