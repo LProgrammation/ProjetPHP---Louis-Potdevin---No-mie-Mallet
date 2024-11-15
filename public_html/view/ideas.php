@@ -1,7 +1,7 @@
 <?php
 session_start();
-if (!isset($_SESSION['user']) || !$_SESSION['user']['is_authenticated']) {
-    header("Location: login.php");
+if ( !$_SESSION['user']['is_authenticated']) {
+    header("Location:sign-in.php");
     exit();
 }
 
@@ -19,13 +19,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
+    // Génération d'un identifiant unique pour l'idée
+    $id = uniqid();
     $author = $userName;
     $date = date('Y-m-d H:i:s');
-    $ideasFile = 'ideas.json';
+    $ideasFile = '../../data/ideas.json';
     $ideas = file_exists($ideasFile) ? json_decode(file_get_contents($ideasFile), true) : [];
 
 
     $newIdea = [
+        'id' => $id,
         'description' => $description,
         'author' => $author,
         'date' => $date,

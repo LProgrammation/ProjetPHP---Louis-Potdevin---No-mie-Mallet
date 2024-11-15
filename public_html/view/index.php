@@ -1,7 +1,6 @@
 <?php
 session_start();
-$idSession = session_id();
-if ($_SESSION[$idSession]["is_authenticated"]) {
+if (!$_SESSION['user']["is_authenticated"]) {
     header("Location:sign-in.php");
     exit();
 }
