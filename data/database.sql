@@ -1,8 +1,8 @@
 -- Create Database 
-CREATE DATABASE IF NOT EXISTS my_database; 
+CREATE DATABASE IF NOT EXISTS PHP_LP_NM; 
 --  Create User and Grant Permissions 
 CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin'; 
-GRANT ALL PRIVILEGES ON my_database.* TO 'admin'@'localhost'; 
+GRANT ALL PRIVILEGES ON PHP_LP_NM.* TO 'admin'@'localhost'; 
 FLUSH PRIVILEGES; 
 -- Use the created database 
 USE PHP_LP_NM; 
