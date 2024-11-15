@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     }
                     echo $a . " = " . $b;
                     $ideas[$index]['votes'] = ['positive' => $a, 'negative' => $b];
-                    var_dump($ideas);
+                    //var_dump($ideas);
                 }
 
             }
@@ -149,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <h3><?php echo nl2br(htmlspecialchars($idea['description'])); ?></h3>
             <p><strong>Auteur :</strong> <?php echo htmlspecialchars($idea['author']); ?></p>
             <p><strong>Date :</strong> <?php echo htmlspecialchars($idea['date']); ?></p>
-            <p><strong>Votes :</strong> Positifs: <?php echo $idea['votes']['positive']; ?> | Négatifs:
+            <p><strong>Votes :</strong> Positifs <?php echo $idea['votes']['positive']; ?> | Négatifs
                 <?php echo $idea['votes']['negative']; ?>
             </p>
 
