@@ -8,7 +8,7 @@
 */
 
 require "ideasTrait.php" ; 
-require "loginTrait.php" ; 
+require "usersTrait.php" ; 
 require "voteTrait.php" ; 
 
 class BDD {
@@ -28,13 +28,17 @@ class BDD {
         $this->setVotePDO($pdo);
         
     }
+
+    public function getPDO() {
+      return $this->pdo;
+    }
+    
 }
 
 $db = "PHP_LP_NM"; 
 $host = "localhost";
 $user = "admin";
 $pwd = "admin";  
-
 $dsn = "mysql:host=".$host.";dbname=".$db.";charset=utf8mb4";
 
 $options = [
@@ -52,10 +56,3 @@ catch (Exception $e) {
 }
 
 $bdd = new BDD($pdo);
-$tests = $bdd->checkUser("Louis");
-if($tests) {
-  print_r($tests);
-}
-else{
-  echo "Utilisateur n'existe pas ! ";
-};
