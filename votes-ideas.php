@@ -4,14 +4,14 @@
 
 session_start();
 if (!isset($_SESSION['user']) || !$_SESSION['user']['is_authenticated']) {
-    header("Location: login.php");
+    header("Location: sign-in.php");
     exit();
 }
 
 $userName = $_SESSION['user']['username'];
 
-$ideasFile = 'ideas.json';
-$votesFile = 'votes.json';
+$ideasFile = '../../data/ideas.json';
+$votesFile = '../../data/votes.json';
 $ideas = [];
 $votes = [];
 
@@ -31,16 +31,24 @@ try {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Validation de l'index de l'idée (doit être un nombre valide)
-    if (isset($_POST['ideaIndex']) && is_numeric($_POST['ideaIndex'])) {
-        $ideaIndex = (int) $_POST['ideaIndex'];
-        if (!isset($ideas[$ideaIndex])) {
-            // Si l'index de l'idée est invalide, redirection avec message d'erreur
-            header("Location: display_ideas.php?error=invalid_idea_index");
+    if (isset($_POST['ideaId'])) {
+        $ideaId = $_POST['ideaId'];
+        $ideaIndex = $_POST['ideaIndex'];
+        $ideaExist = false;
+        foreach ($ideas as $idea) {
+
+            if ($idea['id'] == $ideaId) {
+                $ideaExist = true;
+            }
+
+        }
+        if (!$ideaExist) {
+            header("Location: votes-ideas.php?error=invalid_idea_id");
             exit();
         }
     } else {
         // Si l'index de l'idée est manquant ou invalide, redirection
-        header("Location: display_ideas.php?error=missing_idea_index");
+        header("Location: votes-ideas.php?error=missing_idea_index");
         exit();
     }
 
@@ -48,18 +56,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['vote']) && in_array($_POST['vote'], ['positive', 'negative'])) {
         $voteType = $_POST['vote'];
     } else {
-        header("Location: display_ideas.php?error=invalid_vote_type");
+        header("Location: votes-ideas.php?error=invalid_vote_type");
         exit();
     }
 
-    $idea = &$ideas[$ideaIndex];
-    $ideaId = $idea['title'] . '-' . $idea['author'];
+
+    // MAJ des votes en cumulation et validation (+ popup erreurs)
+    $positiveVotes = 0;
+    $negativeVotes = 0;
 
     // Vérification et enregistrement voté
+    foreach ($votes as $index => $vote) {
+        // si l'utlisateur a déjà voté pour une idée
+        if (isset($vote[$userName])) {
+            $prevId = $index;
+            $prevVoteValue = $votes[$index][$userName];
+            // On retire le vote de cette même idée
 
-    if (isset($votes[$ideaId][$userName])) {
-        // L'utilisateur a déjà voté, redirection avec un message d'erreur
-        header("Location: display_ideas.php?error=already_voted");
+            // Ont parcours les différente idée pour trouver celle qui correspond à l'identifier de l'idée choisie (la nouvelle ou la même pour un changement de vote)
+            foreach ($ideas as $index => $idea) {
+
+                // Dans le cas d'un changement de vote dans la même idée
+                if ($prevId == $ideaId) {
+
+                    if ($voteType === "positive") {
+                        $a = $ideas[$index]['votes']['positive'] + 1;
+                        $b = $ideas[$index]['votes']['negative'] - 1;
+                    } else if ($voteType === "negative") {
+                        $a = $ideas[$index]['votes']['positive'] - 1;
+                        $b = $ideas[$index]['votes']['negative'] + 1;
+                    }
+                    echo $a . " = " . $b;
+                    $ideas[$index]['votes'] = ['positive' => $a, 'negative' => $b];
+                    var_dump($ideas);
+                }
+
+            }
+            unset($votes[$index][$userName]);
+
+        } else {
+            foreach ($ideas as $index => $idea) {
+                if ($idea['id'] == $ideaId) {
+                    if ($voteType == "positive")
+                        $positiveVotes++;
+                    if ($voteType == "negative")
+                        $negativeVotes++;
+                    $ideas[$index]['votes'] = ['positive' => $positiveVotes, 'negative' => $negativeVotes];
+                }
+            }
+
+        }
         exit();
     }
 
@@ -71,36 +117,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         file_put_contents($votesFile, json_encode($votes, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR));
     } catch (JsonException $e) {
         // Erreur lors de l'écriture dans le fichier JSON
-        header("Location: display_ideas.php?error=json_write_error");
+        header("Location: votes-ideas.php?error=json_write_error");
         exit();
     }
 
 
-    // MAJ des votes en cumulation et validation (+ popup erreurs)
-
-    $positiveVotes = 0;
-    $negativeVotes = 0;
-    foreach ($votes[$ideaId] as $voter => $vote) {
-        if ($vote === 'positive') {
-            $positiveVotes++;
-        } elseif ($vote === 'negative') {
-            $negativeVotes++;
-        }
-    }
-
-
-    $ideas[$ideaIndex]['votes'] = ['positive' => $positiveVotes, 'negative' => $negativeVotes];
-
-
-    try {
-        file_put_contents($ideasFile, json_encode($ideas, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR));
-    } catch (JsonException $e) {
-        header("Location: display_ideas.php?error=json_write_error");
-        exit();
-    }
-
-    header("Location: display_ideas.php");
-    exit();
 }
 
 ?>
@@ -121,26 +142,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         return strtotime($b['date']) - strtotime($a['date']);
     });
 
-    foreach ($ideas as $index => $idea) {
-        $votes = $idea['votes'];
-        $positiveVotes = $votes['positive'] ?? 0;
-        $negativeVotes = $votes['negative'] ?? 0;
-    }
-
     ?>
-    <div>
-        <h3><?php echo nl2br(htmlspecialchars($idea['description'])); ?></h3>
-        <p><strong>Auteur :</strong> <?php echo htmlspecialchars($idea['author']); ?></p>
-        <p><strong>Date :</strong> <?php echo htmlspecialchars($idea['date']); ?></p>
-        <p><strong>Votes :</strong> Positifs: <?php echo $positiveVotes; ?> | Négatifs: <?php echo $negativeVotes; ?>
-        </p>
+    <?php foreach ($ideas as $index => $idea) { ?>
+        <div>
 
-        <form method="post">
-            <input type="hidden" name="ideaIndex" value="<?php echo $index; ?>">
-            <button type="submit" name="vote" value="positive">Vote positif</button>
-            <button type="submit" name="vote" value="negative">Vote négatif</button>
-        </form>
-    </div>
+            <h3><?php echo nl2br(htmlspecialchars($idea['description'])); ?></h3>
+            <p><strong>Auteur :</strong> <?php echo htmlspecialchars($idea['author']); ?></p>
+            <p><strong>Date :</strong> <?php echo htmlspecialchars($idea['date']); ?></p>
+            <p><strong>Votes :</strong> Positifs: <?php echo $idea['votes']['positive']; ?> | Négatifs:
+                <?php echo $idea['votes']['negative']; ?>
+            </p>
+
+            <form method="post">
+                <input type="hidden" name="ideaId" value="<?php echo $idea['id']; ?>">
+                <input type="hidden" name="ideaIndex" value="<?php echo $index; ?>">
+                <button type="submit" name="vote" value="positive">Vote positif</button>
+                <button type="submit" name="vote" value="negative">Vote négatif</button>
+            </form>
+        </div>
+    <?php } ?>
     <hr>
 </body>
 
