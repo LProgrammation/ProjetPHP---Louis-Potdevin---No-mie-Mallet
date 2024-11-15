@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     }
                     echo $a . " = " . $b;
                     $ideas[$index]['votes'] = ['positive' => $a, 'negative' => $b];
-                    var_dump($ideas);
+                    //var_dump($ideas);
                 }
 
             }
@@ -143,24 +143,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     });
 
     ?>
-    <?php foreach ($ideas as $index => $idea) { ?>
-        <div>
+    <div>
 
-            <h3><?php echo nl2br(htmlspecialchars($idea['description'])); ?></h3>
-            <p><strong>Auteur :</strong> <?php echo htmlspecialchars($idea['author']); ?></p>
-            <p><strong>Date :</strong> <?php echo htmlspecialchars($idea['date']); ?></p>
-            <p><strong>Votes :</strong> Positifs <?php echo $idea['votes']['positive']; ?> | Négatifs
-                <?php echo $idea['votes']['negative']; ?>
-            </p>
+        <h3><?php echo nl2br(htmlspecialchars($idea['description'])); ?></h3>
+        <p><strong>Auteur :</strong> <?php echo htmlspecialchars($idea['author']); ?></p>
+        <p><strong>Date :</strong> <?php echo htmlspecialchars($idea['date']); ?></p>
+        <p><strong>Votes :</strong> Positifs <?php echo $idea['votes']['positive']; ?> | Négatifs
+            <?php echo $idea['votes']['negative']; ?>
+        </p>
 
-            <form method="post">
-                <input type="hidden" name="ideaId" value="<?php echo $idea['id']; ?>">
-                <input type="hidden" name="ideaIndex" value="<?php echo $index; ?>">
-                <button type="submit" name="vote" value="positive">Vote positif</button>
-                <button type="submit" name="vote" value="negative">Vote négatif</button>
-            </form>
-        </div>
-    <?php } ?>
+        <form method="post">
+            <input type="hidden" name="ideaId" value="<?php echo $idea['id']; ?>">
+            <input type="hidden" name="ideaIndex" value="<?php echo $index; ?>">
+            <button type="submit" name="vote" value="positive">Vote positif</button>
+            <button type="submit" name="vote" value="negative">Vote négatif</button>
+        </form>
+    </div>
     <hr>
 </body>
 
