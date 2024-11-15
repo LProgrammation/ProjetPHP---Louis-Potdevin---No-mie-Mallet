@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     }
                     echo $a . " = " . $b;
                     $ideas[$index]['votes'] = ['positive' => $a, 'negative' => $b];
-                    //var_dump($ideas);
+                    var_dump($ideas);
                 }
 
             }
