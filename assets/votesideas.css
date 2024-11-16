@@ -1,0 +1,76 @@
+/* Vote idées */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: #5024d1;
+  text-align: center;
+  padding: 10px;
+}
+
+p {
+  color: #666;
+  text-align: center;
+  padding: 10px;
+}
+
+div {
+  width: 40%;
+  padding: 25px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+  color: #5024d1;
+  margin-bottom: 10px;
+}
+
+p strong {
+  color: #b2b3b7;
+}
+
+form {
+  padding: 10px;
+}
+
+button[type="submit"] {
+  width: 80%;
+  height: 30px;
+  background-color: #5024d1;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #4b2dbf;
+}
+
+a {
+  text-decoration: none;
+  color: #b2b3b7;
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  text-align: center;
+}
+
+a:hover {
+  color: #5024d1;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #ddd;
+  margin-top: 20px;
+}
