@@ -10,7 +10,12 @@ $userName = $_SESSION['user']['username'];
 // Boucle pour sécuriser les entrées + historique des idées + création d'idées
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    if (isset($_POST['description']) && !empty($_POST['description'])) {
+    if (isset($_POST['description']) && !empty($_POST['description']) && isset($_POST['titre']) && !empty($_POST['titre'])) {
+        
+        
+        $titre = trim($_POST['titre']);
+
+        $titre = htmlspecialchars($titre, ENT_QUOTES, 'UTF-8');
         $description = trim($_POST['description']);
 
         $description = htmlspecialchars($description, ENT_QUOTES, 'UTF-8');
@@ -29,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $newIdea = [
         'id' => $id,
+        'titre' => $titre,
         'description' => $description,
         'author' => $author,
         'date' => $date,

@@ -46,6 +46,14 @@ textarea {
   border-radius: 5px;
   outline-color: #4b2dbf ;
 }
+input[type='text']{
+  margin-bottom: 20px;
+  padding: 10px;
+  color:  #666 ;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline-color: #4b2dbf ;
+}
 
 button[type="submit"] {
   transition: transform 0.5s ease;

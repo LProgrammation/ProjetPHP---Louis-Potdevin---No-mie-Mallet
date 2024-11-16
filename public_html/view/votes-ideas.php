@@ -25,7 +25,8 @@ require "../controller/votes-ideas.php"
     <?php foreach ($ideas as $index => $idea) { ?>
         <div>
 
-            <h3><?php echo nl2br(htmlspecialchars($idea['description'])); ?></h3>
+            <h3><?php echo nl2br(htmlspecialchars($idea['titre'])); ?></h3>
+            <h4><?php echo nl2br(htmlspecialchars($idea['description'])); ?></h4>
             <p><strong>Auteur :</strong> <?php echo htmlspecialchars($idea['author']); ?></p>
             <p><strong>Date :</strong> <?php echo htmlspecialchars($idea['date']); ?></p>
             <p><strong>Votes :</strong> Positifs: <?php echo $idea['votes']['positive']; ?> | Négatifs:

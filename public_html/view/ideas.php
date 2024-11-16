@@ -14,8 +14,10 @@ require "../controller/ideas.php"
     <h1>Boite à idées</h1>
     <p>Une idée à nous soumettre ? <br>
         Veuillez remplir le formulaire ci-dessous.</p>
-    <form method="post">
-        <label for="description">Idée :</label>
+        <form method="post">
+        <label for="titre">Titre Idée :</label>
+        <input type="text" name="titre" required></input><br>
+        <label for="description">Description :</label>
         <textarea name="description" required></textarea><br>
 
         <button type="submit">Soumettre l'idée</button>
