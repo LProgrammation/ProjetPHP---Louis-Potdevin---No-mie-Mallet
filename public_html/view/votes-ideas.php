@@ -7,6 +7,8 @@ require "../controller/votes-ideas.php"
 
 <head>
     <title>Boite à idées-vote</title>
+    <link rel="stylesheet" href="../styles/votesideas.css">
+
 </head>
 
 <body>

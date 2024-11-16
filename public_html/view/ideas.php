@@ -7,6 +7,7 @@ require "../controller/ideas.php"
 
 <head>
     <title>Boite à idées</title>
+    <link rel="stylesheet" href="../styles/ideas.css">
 </head>
 
 <body>
